@@ -49,9 +49,31 @@ app.post("/devs", (req, res) => {
 //PUT
 //http://localhost:3334/
 app.put("/devs/:id", (req, res) => {
-  return response.json(["Dev infos..."]);
+  const { id } = req.params;
+  const { firstname, lastName, age, company, technology } = req.body;
+
+  const devIndex = devs.findIndex((dev) => dev.id === id);
+
+  if (devIndex < 0) {
+    return res.status(400).json({ error: "Ow, sorry, Dev not found." });
+  }
+
+  const dev = { id, firstname, lastName, age, company, technology };
+
+  devs[devIndex] = dev;
+
+  return response.json(dev);
 });
 
 app.delete("/devs/:id", (req, res) => {
-  return response.json(["dev infos..."]);
+  const { id } = req.params;
+  const { firstname, lastName, age, company, technology } = req.body;
+
+  const devIndex = devs.findIndex((dev) => dev.id === id);
+
+  const dev = { id, firstname, lastName, age, company, technology };
+
+  devs.splice(devIndex, 1);
+
+  return response.json(devs);
 });
